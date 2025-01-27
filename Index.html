@@ -1,0 +1,484 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Lista de Ramais</title>
+    <style>
+        body {  
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+
+        .logo img {
+            width: 100px;
+            margin-right: 20px;
+        }
+
+        .logo h1 {  
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .logo h2 {
+            font-size: 1em;
+            font-style: italic;
+            margin: 0;
+            margin-bottom: -55px;
+            margin-left: -250px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            flex: 1;
+            justify-content: flex-end;
+        }
+
+        .search-container input {
+            padding: 10px;
+            border: 1px solid #A0013B;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        .search-container button {
+            margin-left: 10px;
+            padding: 10px;
+            background: transparent;
+            border: transparent;
+            cursor: pointer;
+        }
+
+        .material-icons {
+            color: #a0013b;
+        }
+
+        .button-filter {
+            margin-left: 10px;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            padding: 5px;
+        }
+
+        .card { 
+            background: linear-gradient(#A0013B, #770427);
+            padding: 25px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card img {
+            width: 100%; /* Faz a imagem ocupar toda a largura do card */
+            height: auto; /* Mantém a proporção da imagem */
+            max-width: 150px; /* Define um limite máximo para a largura */
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            margin: 5px 0;
+            color: #fff;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .cabeçalho {
+            color: transparent;
+        }
+
+        @media (max-width: 768px) {
+            .logo h1 {
+                font-size: 1.8em; /* Reduz o tamanho do título em telas menores */
+            }
+
+            .logo h2 {
+                font-size: 0.8em; /* Reduz o tamanho do subtítulo em telas menores */
+                margin-left: 0; /* Remove a margem esquerda */
+                margin-bottom: 0; /* Remove a margem inferior */
+            }
+
+            .search-container {
+                margin-left: 0; /* Remove a margem esquerda */
+                justify-content: center; /* Centraliza os elementos */
+                flex-wrap: wrap; /* Permite que os elementos se movam para a linha seguinte */
+            }
+
+            .search-container input {
+                width: 100%; /* Faz o campo de pesquisa ocupar toda a largura */
+                margin-bottom: 10px; /* Adiciona espaço abaixo do campo de pesquisa */
+            }
+
+            .button-filter {
+                margin: 0; /* Remove a margem do botão de filtro */
+            }
+
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Ajusta o número de colunas */
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <img src="IMAGENS/Logo.png" alt="Logo">
+        <h1>LISTA DE RAMAIS</h1>
+        <h2>Escritorio matriz</h2>
+    </div>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Pesquisar..."> 
+        <button><span class="material-icons">search</span></button>
+        <div class="dropdown">
+            <button class="button-filter"><span class="material-icons">filter_alt</span></button>
+            <div class="dropdown-content">
+                <a href="#" data-value="">Todos os Setores</a>
+                <a href="#" data-value="TI">TI</a>
+                <a href="#" data-value="Gerência">Gerência</a>
+                <a href="#" data-value="Setor de Compras">Setor de Compras</a>
+                <a href="#" data-value="Crédito e Cobrança">Crédito e Cobrança</a>
+                <a href="#" data-value="Diretoria">Diretoria</a>
+                <a href="#" data-value="Jurídico">Jurídico</a>
+                <a href="#" data-value="Comercial">Comercial</a>
+                <a href="#" data-value="Contas a Receber">Contas a Receber</a>
+                <a href="#" data-value="Contas a Pagar">Contas a Pagar</a>
+                <a href="#" data-value="RH">RH</a>
+                <a href="#" data-value="Atendimento">Atendimento</a>
+                <a href="#" data-value="Consultor">Consultor</a>
+                <a href="#" data-value="Contabilidade">Contabilidade</a>
+            </div>
+        </div>
+    </div>
+</header>
+<main class="container">
+    <div class="grid">
+        <div class="card" data-name="Jakson" data-setor="Gerência">
+            <img src="IMAGENS/Fotos perfil/jakson.png" alt="Jakson">
+            <p><strong>Nome:</strong> Jakson</p>
+            <p><strong>Ramal:</strong> 7029</p>
+            <p><strong>Setor:</strong> TI</p>
+        </div>
+        <div class="card" data-name="Lindemberg" data-setor="Gerência">
+            <img src="" alt="Lindemberg">
+            <p><strong>Nome:</strong> Lindemberg</p>
+            <p><strong>Ramal:</strong> 7023</p>
+            <p><strong>Setor:</strong> Gerência</p>
+        </div>
+        <div class="card" data-name="Alysson" data-setor="Setor de Compras">
+            <img src="" alt="Alysson">
+            <p><strong>Nome:</strong> Alysson</p>
+            <p><strong>Ramal:</strong> 7011</p>
+            <p><strong>Setor:</strong> Setor de Compras</p>
+        </div>
+        <div class="card" data-name="Mayana" data-setor="Setor de Compras">
+            <img src="" alt="Mayana">
+            <p><strong>Nome:</strong> Mayana</p>
+            <p><strong>Ramal:</strong> 7011</p>
+            <p><strong>Setor:</strong> Setor de Compras</p>
+        </div>
+        <div class="card" data-name="Amanda" data-setor="Crédito e Cobrança">
+            <img src="" alt="Amanda">
+            <p><strong>Nome:</strong> Amanda</p>
+            <p><strong>Ramal:</strong> 7016</p>
+            <p><strong>Setor:</strong> Crédito e Cobrança</p>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="card" data-name="Carol Soares" data-setor="Diretoria">
+            <img src="" alt="Carol">
+            <p><strong>Nome:</strong> Carol Soares</p>
+            <p><strong>Ramal:</strong> 7017</p>
+            <p><strong>Setor:</strong> Diretoria</p>
+        </div>
+        <div class="card" data-name="Raissa" data-setor="Jurídico">
+            <img src="" alt="Raissa">
+            <p><strong>Nome:</strong> Raissa</p>
+            <p><strong>Ramal:</strong> 7019</p>
+            <p><strong>Setor:</strong> Jurídico</p>
+        </div>
+        <div class="card" data-name="Mirelle Soares" data-setor="Diretoria">
+            <img src="" alt="Mirelle Soares">
+            <p><strong>Nome:</strong> Mirelle Soares</p>
+            <p><strong>Ramal:</strong> 7020</p>
+            <p><strong>Setor:</strong> Diretoria</p>
+        </div>
+        <div class="card" data-name="Jessica" data-setor="Crédito e Cobrança">
+            <img src="" alt="Jessica">
+            <p><strong>Nome:</strong> Jessica</p>
+            <p><strong>Ramal:</strong> 7021</p>
+            <p><strong>Setor:</strong> Crédito e Cobrança</p>
+        </div>
+        <div class="card" data-name="Stephanie Soares" data-setor="Diretoria">
+            <img src="" alt="Stephanie">
+            <p><strong>Nome:</strong> Stephanie Soares</p>
+            <p><strong>Ramal:</strong> 7024</p>
+            <p><strong>Setor:</strong> Diretoria</p>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="card" data-name="Erique" data-setor="Comercial">
+            <img src="" alt="Erique">
+            <p><strong>Nome:</strong> Erique</p>
+            <p><strong>Ramal:</strong> 7026</p>
+            <p><strong>Setor:</strong> Comercial</p>
+        </div>
+        <div class="card" data-name="Adriana" data-setor="Gerência">
+            <img src="" alt="Adriana">
+            <p><strong>Nome:</strong> Adriana</p>
+            <p><strong>Ramal:</strong> 7027</p>
+            <p><strong>Setor:</strong> Gerência</p>
+        </div>
+        <div class="card" data-name="Luiz Claudio" data-setor="Diretoria">
+            <img src="" alt="Luiz Claudio">
+            <p><strong>Nome:</strong> Luiz Claudio</p>
+            <p><strong>Ramal:</strong> 7030</p>
+            <p><strong>Setor:</strong> Diretoria</p>
+        </div>
+        <div class="card" data-name="Evelin" data-setor="Contas a Receber">
+            <img src="" alt="Evelin">
+            <p><strong>Nome:</strong> Evelin</p>
+            <p><strong>Ramal:</strong> 7031</p>
+            <p><strong>Setor:</strong> Contas a Receber</p>
+        </div>
+        <div class="card" data-name="Raquel" data-setor="Contas a Receber">
+            <img src="" alt="Raquel">
+            <p><strong>Nome:</strong> Raquel</p>
+            <p><strong>Ramal:</strong> 7031</p>
+            <p><strong>Setor:</strong> Contas a Receber</p>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="card" data-name="Djane" data-setor="Comercial">
+            <img src="" alt="Djane">
+            <p><strong>Nome:</strong> Djane</p>
+            <p><strong>Ramal:</strong> 7034</p>
+            <p><strong>Setor:</strong> Comercial</p>
+        </div>
+        <div class="card" data-name="Maykon" data-setor="TI">
+            <img src="" alt="Maykon">
+            <p><strong>Nome:</strong> Maykon</p>
+            <p><strong>Ramal:</strong> 7035</p>
+            <p><strong>Setor:</strong> TI</p>
+        </div>
+        <div class="card" data-name="Tauan" data-setor="TI">
+            <img src="" alt="Tauan">
+            <p><strong>Nome:</strong> Tauan</p>
+            <p><strong>Ramal:</strong> 7035</p>
+            <p><strong>Setor:</strong> TI</p>
+        </div>
+        <div class="card" data-name="Pedro" data-setor="Atendimento">
+            <img src="" alt="Pedro">
+            <p><strong>Nome:</strong> Pedro</p>
+            <p><strong>Ramal:</strong> 7036</p>
+            <p><strong>Setor:</strong> Atendimento</p>
+        </div>
+        <div class="card" data-name="Luana" data-setor="Comercial">
+            <img src="" alt="Luana">
+            <p><strong>Nome:</strong> Luana</p>
+            <p><strong>Ramal:</strong> 7037</p>
+            <p><strong>Setor:</strong> Comercial</p>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="card" data-name="Marilia" data-setor="Contas a Pagar">
+            <img src="" alt="Marilia">
+            <p><strong>Nome:</strong> Marilia</p>
+            <p><strong>Ramal:</strong> 7039</p>
+            <p><strong>Setor:</strong> Contas a Pagar</p>
+        </div>
+        <div class="card" data-name="Marcelo" data-setor="Contas a Pagar">
+            <img src="" alt="Marcelo">
+            <p><strong>Nome:</strong> Marcelo</p>
+            <p><strong>Ramal:</strong> 7039</p>
+            <p><strong>Setor:</strong> Contas a Pagar</p>
+        </div>
+        <div class="card" data-name="Larissa Soares" data-setor="Diretoria">
+            <img src="" alt="Larissa Soares">
+            <p><strong>Nome:</strong> Larissa Soares</p>
+            <p><strong>Ramal:</strong> 7040</p>
+            <p><strong>Setor:</strong> Diretoria</p>
+        </div>
+        <div class="card" data-name="Jussiara" data-setor="RH">
+            <img src="" alt="Jussiara">
+            <p><strong>Nome:</strong> Jussiara</p>
+            <p><strong>Ramal:</strong> 7041</p>
+            <p><strong>Setor:</strong> RH</p>
+        </div>
+        <div class="card" data-name="Fernando" data-setor="Contabilidade">
+            <img src="" alt="Fernando">
+            <p><strong>Nome:</strong> Fernando</p>
+            <p><strong>Ramal:</strong> 7043</p>
+            <p><strong>Setor:</strong> Contabilidade</p>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="card" data-name="Luciene" data-setor="">
+            <img src="" alt="Luciene">
+            <p><strong>Nome:</strong> Luciene</p>
+            <p><strong>Ramal:</strong> 7032</p>
+            <p><strong>Setor:</strong></p>
+        </div>
+        <div class="card" data-name="Arabella" data-setor="Atendimento">
+            <img src="" alt="Arabella">
+            <p><strong>Nome:</strong> Arabella</p>
+            <p><strong>Ramal:</strong> 7047</p>
+            <p><strong>Setor:</strong> Atendimento</p>
+        </div>
+        <div class="card" data-name="Rafael" data-setor="Gerência">
+            <img src="" alt="Rafael">
+            <p><strong>Nome:</strong> Rafael</p>
+            <p><strong>Ramal:</strong> 7048</p>
+            <p><strong>Setor:</strong> Gerência</p>
+        </div>
+        <div class="card" data-name="Edivandro" data-setor="Consultor">
+            <img src="" alt="Edivandro">
+            <p><strong>Nome:</strong> Edivandro</p>
+            <p><strong>Ramal:</strong> 7059</p>
+            <p><strong>Setor:</strong> Consultor</p>
+        </div>
+        <div class="card" data-name="Tatiane" data-setor="RH">
+            <img src="" alt="Tatiane">
+            <p><strong>Nome:</strong> Tatiane</p>
+            <p><strong>Ramal:</strong> 7074</p>
+            <p><strong>Setor:</strong> RH</p>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="card" data-name="Thiago" data-setor="Comercial">
+            <img src="" alt="Thiago">
+            <p><strong>Nome:</strong> Thiago</p>
+            <p><strong>Ramal:</strong> 7026</p>
+            <p><strong>Setor:</strong> Comercial</p>
+        </div>
+        <div class="card" data-name="Arthur" data-setor="Contas a Pagar">
+            <img src="" alt="Arthur">
+            <p><strong>Nome:</strong> Arthur</p>
+            <p><strong>Ramal:</strong> 8420</p>
+            <p><strong>Setor:</strong> Contas a Pagar</p>
+        </div>
+        <div class="card" data-name="Itácia" data-setor="Contas a Pagar">
+            <img src="" alt="Itácia">
+            <p><strong>Nome:</strong> Itácia</p>
+            <p><strong>Ramal:</strong> 8410</p>
+            <p><strong>Setor:</strong> Contas a Pagar</p>
+        </div>
+        <div class="card" data-name="Flavia" data-setor="Contabilidade">
+            <img src="" alt="Flavia">
+            <p><strong>Nome:</strong> Flavia</p>
+            <p><strong>Ramal:</strong> 8430</p>
+            <p><strong>Setor:</strong> Contabilidade</p>
+        </div>
+        <div class="card" data-name="José Roberto" data-setor="Gerência">
+            <img src="" alt="José Roberto">
+            <p><strong>Nome:</strong> José Roberto</p>
+            <p><strong>Ramal:</strong> 7002</p>
+            <p><strong>Setor:</strong> Gerência</p>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="card" data-name="Jurema" data-setor="Atendimento">
+            <img src="" alt="Jurema">
+            <p><strong>Nome:</strong> Jurema</p>
+            <p><strong>Ramal:</strong> 7012</p>
+            <p><strong>Setor:</strong> Atendimento</p>
+        </div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+    </div>
+</main>
+<script>
+    function filterCards() {
+        const searchValue = document.getElementById('searchInput').value.toLowerCase();
+        const selectedSector = document.querySelector('.dropdown-content a.selected') ? document.querySelector('.dropdown-content a.selected').getAttribute('data-value').toLowerCase() : '';
+        const cards = document.querySelectorAll('.card');
+        
+        cards.forEach(card => {
+            const name = card.getAttribute('data-name') ? card.getAttribute('data-name').toLowerCase() : '';
+            const setor = card.getAttribute('data-setor') ? card.getAttribute('data-setor').toLowerCase() : '';
+            
+            const matchesSearch = name.includes(searchValue) || setor.includes(searchValue);
+            const matchesSector = selectedSector === '' || setor === selectedSector;
+
+            if (matchesSearch && matchesSector) {
+                card.style.display = 'block';
+            } else { 
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterCards);
+
+    document.querySelectorAll('.dropdown-content a').forEach(item => {
+        item.addEventListener('click', function(event) {
+            event.preventDefault(); // Evita o comportamento padrão do link
+            // Remove a classe 'selected' de todos os links
+            document.querySelectorAll('.dropdown-content a').forEach(link => link.classList.remove('selected'));
+            // Adiciona a classe 'selected' ao link clicado
+            this.classList.add('selected');
+            const selectedValue = this.getAttribute('data-value');
+            filterCards(); // Chama a função de filtro
+        });
+    });
+</script>
+</body>
+</html>
